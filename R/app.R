@@ -29,13 +29,13 @@ getData <- function(varName, options) {
 	
 	data <- addIdColumn(data, options$idField, varName)
 	
+	# filtering per id has to be done first, otherwise, if the only included field is _id, we will end up with a vector
+	if (!is.null(options$matchIds)) {
+		data <- data[data$'_id' %in% options$matchIds, ]
+	}
 	
 	if(!is.null(options$includedFields)) {
 		data <- data[unique(c('_id', unlist(options$includedFields)))]
-	}
-	
-	if (!is.null(options$matchIds)) {
-		data <- data[data$'_id' %in% options$matchIds, ]
 	}
 	
 	if (!is.null(options$limit) && options$limit != 0) {
