@@ -34,11 +34,11 @@ getData <- function(varName, options) {
 		data <- data[data$'_id' %in% options$matchIds, ]
 	}
 
-	if (!is.null(options$returnCount)) {
+	if (!is.null(options$returnCount) && options$returnCount) {
 		return(nrow(data))
 	}
 	
-	if(!is.null(options$includedFields)) {
+	if(!is.null(options$includedFields) && length(options$includedFields) > 0) {
 		data <- data[unique(c('_id', unlist(options$includedFields)))]
 	}
 	
